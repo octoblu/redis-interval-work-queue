@@ -32,6 +32,8 @@ var _ = Describe("ProcessQueue", func() {
 				var err error
 				_,err = redisConn.Do("DEL", "linear-job-queue")
 				_,err = redisConn.Do("DEL", "circular-job-queue")
+				_,err = redisConn.Do("DEL", "[namespace]-foolishly-ignore-warning")
+				_,err = redisConn.Do("DEL", "[namespace]-nah-i-got-this")
 				_,err = redisConn.Do("RPUSH", "circular-job-queue", "foolishly-ignore-warning", "nah-i-got-this")
 				err = sut.Process()
 				Expect(err).To(BeNil())
@@ -60,8 +62,9 @@ var _ = Describe("ProcessQueue", func() {
 				})
 
 				It("should add to the other queue", func(){
-					resp,err := redisConn.Do("LINDEX", "linear-job-queue", 1)
+					resp,err := redisConn.Do("LINDEX", "linear-job-queue", 0)
 					Expect(err).To(BeNil())
+					Expect(resp).NotTo(BeNil())
 
 					record := string(resp.([]uint8))
 					Expect(record).To(Equal("foolishly-ignore-warning"))
