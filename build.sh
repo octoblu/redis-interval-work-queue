@@ -17,7 +17,7 @@ run() {
   docker run --rm \
     --volume $TMP_DIR:/export/ \
     $IMAGE_NAME \
-      cp /go/$APP_NAME /export
+      cp $APP_NAME /export
 }
 
 copy() {
