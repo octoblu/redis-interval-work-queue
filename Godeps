@@ -1,4 +1,5 @@
 github.com/codegangsta/cli
+github.com/garyburd/redigo/redis
 github.com/octoblu/claimablejob
 github.com/octoblu/circularqueue
 github.com/onsi/ginkgo/ginkgo
